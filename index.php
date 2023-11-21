@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require "php/db_con.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,9 +106,15 @@
   ?>
   <div class="container mt-3">
     <dir class="card bg-light px-3 mt-5">
-      <div id="inputgroup" class="input-group my-2" style="width: 200px; display: none;">
-          <input id="searchbar" class="form-control" type="search" placeholder="Tìm kiếm..." style="width: 100%;"  oninput="classsearch()">
+      <div class="row">
+        <div class="col"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addstuden"><i class="bi-plus"></i></button></div>
+        <div class="col"><button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editstuden"><i class="bi-brush"></i></button></div>
+        <div class="col">
+          <div id="inputgroup" class="input-group my-2" style="width: 200px; display: none;">
+            <input id="searchbar" class="form-control" type="search" placeholder="Tìm kiếm..." style="width: 80%;"  oninput="classsearch()">
           <!-- <span id="search-bt" class="input-group-text btn sreach_name_btn bg-light"><i class="bi-search"></i></span> -->
+          </div>
+        </div>  
       </div>
       <div id="datahere">
         <h1>Xin chào <?php
@@ -117,6 +124,116 @@
         đã đến trang web của tôi!</h1>
       </div>
     </dir>
+  </div>
+  <div class="modal fade" id="addstuden" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm sinh viên</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">Họ Tên</label>
+                <input id="svname" type="text" class="form-control" placeholder="Tên sinh viên">
+                <label id="svwarn" class="form-label" style="display: none;"></label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ngày vào đoàn</label>
+                <input type="date" class="form-control" id="svdayin">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Lớp:</label>
+                <select id="msclass" class="form-select">
+                  <?php
+                    $sql="SELECT * FROM class";
+                    $class=mysqli_query($conn,$sql);
+                    // var_dump($class);
+                    foreach($class as $row){
+                      echo "<option value=".$row['MaL'].">".$row['TenL']."</option>";
+                    }
+                  ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Khu vực:</label>
+                <select id="address" class="form-select">
+                  <?php
+                    $sql="SELECT * FROM address";
+                    $address=mysqli_query($conn,$sql);
+                    foreach($address as $row){
+                      echo "<option value=".$row['MaAD'].">".$row['TenAD']."</option>";
+                    }
+                  ?>
+                </select>
+            </div>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="addsv()">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editstuden" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Chỉnh sữa sinh viên</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">Mã sinh viên</label>
+                <select id="id" class="form-select">
+                  <option selected="selected" value=""></option>
+                  <?php
+                    $sql="SELECT MSSV FROM studens";
+                    $class=mysqli_query($conn,$sql);
+                    // var_dump($class);
+                    foreach($class as $row){
+                      echo "<option value=".$row['MSSV'].">".$row['MSSV']."</option>";
+                    }
+                  ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Họ Tên</label>
+                <input id="esvname" type="text" class="form-control" placeholder="Tên sinh viên">
+                <label id="esvwarn" class="form-label" style="display: none;"></label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ngày vào đoàn</label>
+                <input type="date" class="form-control" id="esvdayin">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Lớp:</label>
+                <select id="emsclass" class="form-select">
+                  <option selected="selected" value=""></option>
+                  <?php
+                    $sql="SELECT * FROM class";
+                    $class=mysqli_query($conn,$sql);
+                    // var_dump($class);
+                    foreach($class as $row){
+                      echo "<option value=".$row['MaL'].">".$row['TenL']."</option>";
+                    }
+                  ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Khu vực:</label>
+                <select id="eaddress" class="form-select">
+                  <option selected="selected" value=""></option>
+                  <?php
+                    $sql="SELECT * FROM address";
+                    $address=mysqli_query($conn,$sql);
+                    foreach($address as $row){
+                      echo "<option value=".$row['MaAD'].">".$row['TenAD']."</option>";
+                    }
+                  ?>
+                </select>
+            </div>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="editsv()">Sữa</button>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     <?php
@@ -198,6 +315,59 @@
       xmlhttp.open("GET","./php/aboutme.php",true);
       xmlhttp.send();
     });
+    function addsv(){
+      var svname=document.getElementById("svname");
+      var warn=document.getElementById("svwarn");
+      if(name.value=""){
+        warn.style.display="block";
+        warn.innerHTML="Tên không được để trống!";
+        warn.style.color="red";
+        name.focus();
+        return;
+      }
+      var day=document.getElementById("svdayin");
+      var msclass=document.getElementById("msclass");
+      var address=document.getElementById("address");
+      
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("datahere").innerHTML = this.responseText;
+            document.getElementById("inputgroup").style.display="block";
+          }
+      };
+      var string="svname="+svname.value+"&svdayin="+day.value+"&class="+msclass.value+"&address="+address.value;
+      // console.log(string);
+      xmlhttp.open("GET","./php/class.php?"+string,true);
+      xmlhttp.send();
+    };
+    function editsv(){
+      var id=document.getElementById("id");
+      var svname=document.getElementById("esvname");
+      var warn=document.getElementById("esvwarn");
+      if(name.value=""){
+        warn.style.display="block";
+        warn.innerHTML="Tên không được để trống!";
+        warn.style.color="red";
+        name.focus();
+        return;
+      }
+      var day=document.getElementById("esvdayin");
+      var msclass=document.getElementById("emsclass");
+      var address=document.getElementById("eaddress");
+      
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("datahere").innerHTML = this.responseText;
+            document.getElementById("inputgroup").style.display="block";
+          }
+      };
+      var string="id="+id.value+"&svname="+svname.value+"&svdayin="+day.value+"&class="+msclass.value+"&address="+address.value;
+      // console.log(string);
+      xmlhttp.open("GET","./php/class.php?"+string,true);
+      xmlhttp.send();
+    };
   </script>
 </body>
 </html>
