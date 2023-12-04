@@ -5,6 +5,139 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+/* input[type=number] {
   -moz-appearance: textfield;
+} */
+/* display: grid;
+grid-template-columns: 66.667% 33.334%;	 */
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid; */
+  color: #adbac7;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.main{
+  /* margin: 5px; */
+  display: flex;
+  flex: 1;
+  /* border: 1px solid; */
+  background: #22272e;
+}
+.left{
+  /* background-color: blue; */
+  padding: 30px 0 30px 0;
+  flex: 1;
+}
+.right{
+  /* background-color: blue; */
+  padding: 30px 0 30px 0;
+  flex: 1;
+}
+header{
+  /* background-color: blue; */
+  padding: 20px 0 30px 0;
+  background-color: #1c2128;
+  margin: 0;
+}
+menu{
+  margin: 0;
+  background-color: #1c2128;
+  padding: 10px 0 15px 0;
+  border-bottom: 1px solid #373e47;
+}
+main{
+  /* background-color: blue; */
+  padding: 30px 0 30px 0;
+  flex: 5;
+  /* align-self: center; */
+}
+footer{
+  /* background-color: blue; */
+  padding: 30px 0 20px 0;
+  background-color: #1c2128;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.menu_bar li {
+  float: left;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+li a{
+  text-decoration: none;
+  color:#adbac7;
+}
+.data_table{
+  margin-left: auto;
+  margin-right: auto;
+}
+input{
+  background-color: #22272e;
+  border: 1px solid #adbac7;
+  border-radius: 5px 5px;
+  color: #adbac7;
+  padding: .6em;
+}
+input[type="file"] {
+  background-color: #22272e;
+  border: 1px solid #adbac7;
+  border-radius: 5px 5px;
+  color: #adbac7;
+  padding: .14em;
+}
+input::file-selector-button {
+  background-color: #3d444c;
+  border: #59626e;
+  border-radius: 5px 5px;
+  color: #adbac7;
+  padding: .5em;
+}
+input:focus{
+  border:none;
+  outline: 3px solid #628ec7;
+}
+menu .btn{
+  border-radius: 5px 5px;
+  color: #adbac7;
+  padding: .6em;
+}
+menu .btn:hover{
+  background-color: #2b3038;
+}
+
+main .btn{
+  background-color: #3d444c;
+  border: #59626e;
+  border-radius: 5px 5px;
+  color: #adbac7;
+  padding: .6em;
+}
+main .btn:hover{
+  background-color: #444c56;
+}
+
+.btn_control_add{
+  border: 2px solid #3c7c40;
+  background-color: #46954a;
+  border-radius: 5px 5px;
+  color: white;
+  padding: .7em;
+}
+.btn_control_add:hover{
+  background-color: #5ca660;
+}
+.img_box{
+  height: 100px;
+  width: 100px;
+}
+img{
+  max-width: 100%;
 }
